@@ -5,10 +5,10 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/students', async (req, res) => {
+app.get('/users', async (req, res) => {
     try {
         const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM stu');
+        const [rows] = await connection.query('SELECT * FROM users');
 
         connection.release();
         res.json(rows);

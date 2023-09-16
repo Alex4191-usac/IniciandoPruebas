@@ -8,30 +8,24 @@ jest.mock('../config/db', () => ({
     getConnection: jest.fn(),
 }));
 
-test('should return 200 when get /students', async () => {
-    const mockRows = [
-        {
-            "stu_id": 123456,
-            "LastName": "DrinkWater",
-            "FirstName": "Walter",
-            "Address": "14 NE ST TX",
-            "City": "Texas"
-          },
-          {
-            "stu_id": 123457,
-            "LastName": "Gonzales",
-            "FirstName": "David",
-            "Address": "20 SW N TX",
-            "City": "Texas"
-          },
-          {
-            "stu_id": 123456,
-            "LastName": "Jucy",
-            "FirstName": "Lucy",
-            "Address": "14 NE ST TX",
-            "City": "Texas"
-          }
-    ];
+test('should return 200 when get /users', async () => {
+  const mockRows = [
+    {
+      "user_id": 1,
+      "username": "user1",
+      "password": "password1"
+    },
+    {
+      "user_id": 2,
+      "username": "user2",
+      "password": "password2"
+    },
+    {
+      "user_id": 3,
+      "username": "user3",
+      "password": "password3"
+    }
+  ]
 
     //Mock the pool method implementations
     pool.getConnection.mockResolvedValueOnce({
@@ -39,34 +33,11 @@ test('should return 200 when get /students', async () => {
         release: jest.fn()
     });
 
-    const res = await request(app).get('/students');
+    const res = await request(app).get('/users');
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual(mockRows);
+    expect(res.body).toEqual(...mockRows);
 
 });
 
 
 
-/*
-{
-      "stu_id": 123456,
-      "LastName": "DrinkWater",
-      "FirstName": "Walter",
-      "Address": "14 NE ST TX",
-      "City": "Texas"
-    },
-    {
-      "stu_id": 123457,
-      "LastName": "Gonzales",
-      "FirstName": "David",
-      "Address": "20 SW N TX",
-      "City": "Texas"
-    },
-    {
-      "stu_id": 123456,
-      "LastName": "Jucy",
-      "FirstName": "Lucy",
-      "Address": "14 NE ST TX",
-      "City": "Texas"
-    }
- */
